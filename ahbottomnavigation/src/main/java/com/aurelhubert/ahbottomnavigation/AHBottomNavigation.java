@@ -1231,6 +1231,21 @@ public class AHBottomNavigation extends FrameLayout {
 			ViewGroup.LayoutParams params = getLayoutParams();
 			if (bottomNavigationBehavior == null) {
 				bottomNavigationBehavior = new AHBottomNavigationBehavior<>(behaviorTranslationEnabled, navigationBarHeight);
+				bottomNavigationBehavior.setShowHideListener(new OnShowHideListener() {
+					@Override
+					public void onShow() {
+						if (showHideListener!=null){
+							showHideListener.onShow();
+						}
+					}
+
+					@Override
+					public void onHide() {
+						if (showHideListener!=null){
+							showHideListener.onHide();
+						}
+					}
+				});
 			} else {
 				bottomNavigationBehavior.setBehaviorTranslationEnabled(behaviorTranslationEnabled, navigationBarHeight);
 			}
