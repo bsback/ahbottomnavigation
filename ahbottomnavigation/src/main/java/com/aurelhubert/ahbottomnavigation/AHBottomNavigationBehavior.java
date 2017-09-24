@@ -143,9 +143,17 @@ public class AHBottomNavigationBehavior<V extends View> extends VerticalScrollin
 		if (scrollDirection == ScrollDirection.SCROLL_DIRECTION_DOWN && hidden) {
 			hidden = false;
 			animateOffset(child, 0, false, true);
+
+			if (showHideListener!=null){
+				showHideListener.onShow();
+			}
 		} else if (scrollDirection == ScrollDirection.SCROLL_DIRECTION_UP && !hidden) {
 			hidden = true;
 			animateOffset(child, child.getHeight(), false, true);
+
+			if (showHideListener!=null){
+				showHideListener.onHide();
+			}
 		}
 	}
 
