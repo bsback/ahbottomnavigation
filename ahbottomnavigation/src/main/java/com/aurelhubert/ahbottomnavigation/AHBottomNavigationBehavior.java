@@ -41,6 +41,15 @@ public class AHBottomNavigationBehavior<V extends View> extends VerticalScrollin
 	private boolean behaviorTranslationEnabled = true;
 	private OnNavigationPositionListener navigationPositionListener;
 
+	public AHBottomNavigation.OnShowHideListener getShowHideListener() {
+		return showHideListener;
+	}
+
+	public void setShowHideListener(AHBottomNavigation.OnShowHideListener showHideListener) {
+		this.showHideListener = showHideListener;
+	}
+
+	private AHBottomNavigation.OnShowHideListener showHideListener;
 	/**
 	 * Constructor
 	 */
@@ -265,6 +274,10 @@ public class AHBottomNavigationBehavior<V extends View> extends VerticalScrollin
 		if (!hidden) {
 			hidden = true;
 			animateOffset(view, offset, true, withAnimation);
+
+			if (showHideListener!=null){
+				showHideListener.onHide();
+			}
 		}
 	}
 
@@ -276,6 +289,9 @@ public class AHBottomNavigationBehavior<V extends View> extends VerticalScrollin
 		if (hidden) {
 			hidden = false;
 			animateOffset(view, 0, true, withAnimation);
+			if (showHideListener!=null){
+				showHideListener.onShow();
+			}
 		}
 	}
 

@@ -71,6 +71,7 @@ public class AHBottomNavigation extends FrameLayout {
 	// Listener
 	private OnTabSelectedListener tabSelectedListener;
 	private OnNavigationPositionListener navigationPositionListener;
+	private OnShowHideListener showHideListener;
 
 	// Variables
 	private Context context;
@@ -1281,6 +1282,8 @@ public class AHBottomNavigation extends FrameLayout {
 					.setInterpolator(new LinearOutSlowInInterpolator())
 					.setDuration(withAnimation ? 300 : 0)
 					.start();
+
+			onHide();
 		}
 	}
 
@@ -1306,6 +1309,8 @@ public class AHBottomNavigation extends FrameLayout {
 					.setInterpolator(new LinearOutSlowInInterpolator())
 					.setDuration(withAnimation ? 300 : 0)
 					.start();
+
+			onShow();
 		}
 	}
 
@@ -1378,6 +1383,16 @@ public class AHBottomNavigation extends FrameLayout {
 	 */
 	public void removeOnTabSelectedListener() {
 		this.tabSelectedListener = null;
+	}
+
+	public void setOnShowHideListener(OnShowHideListener showHideListener){
+		this.showHideListener = showHideListener;
+		if (bottomNavigationBehavior!=null){
+			bottomNavigationBehavior.setShowHideListener(showHideListener);
+		}
+	}
+	public void removeOnShowHideListener() {
+		this.showHideListener = null;
 	}
 
 	/**
@@ -1630,4 +1645,21 @@ public class AHBottomNavigation extends FrameLayout {
 		void onPositionChange(int y);
 	}
 
+
+	public interface OnShowHideListener {
+		void onShow();
+		void onHide();
+	}
+
+	public void onShow(){
+		if (showHideListener!=null){
+			showHideListener.onShow();
+		}
+	}
+
+	public void onHide(){
+		if (showHideListener!=null){
+			showHideListener.onHide();
+		}
+	}
 }
